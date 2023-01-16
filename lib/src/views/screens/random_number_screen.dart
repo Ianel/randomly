@@ -22,8 +22,7 @@ class _RandomNumberPageState extends State<RandomNumberPage> {
   int generateRandomNumber({required int minNumber, required int maxNumber}) {
     int max = maxNumber;
     int min = minNumber;
-    int seed = Random().nextInt(max);
-    int randomNumber = seed >= min ? seed : seed + min;
+    int randomNumber = (Random().nextDouble() * (max - min + 1) + min).floor();
     return randomNumber;
   }
 
