@@ -1,6 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:hello_world/src/models/photo_model.dart';
+import 'package:hello_world/src/services/photo_service.dart';
 
 class RandomNumberPage extends StatefulWidget {
   const RandomNumberPage({
@@ -18,11 +19,24 @@ class RandomNumberPage extends StatefulWidget {
 
 class _RandomNumberPageState extends State<RandomNumberPage> {
   int number = 0;
+  PhotoService service = PhotoService();
+  String url = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    service.getRandomPhoto().then((value) {
+      url = value.imageUrl;
+    });
+
+    print(url);
+  }
 
   int generateRandomNumber({required int minNumber, required int maxNumber}) {
     int max = maxNumber;
     int min = minNumber;
-    int randomNumber = (Random().nextDouble() * (max - min + 1) + min).floor();
+    int randomNumber = (Random().nextDouble() * (max - min + 1)).floor() + min;
     return randomNumber;
   }
 
@@ -31,17 +45,27 @@ class _RandomNumberPageState extends State<RandomNumberPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Random Number")),
       body: Center(
-        child: Text(
-          "$number",
-          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+        child: Column(
+          children: [
+            Image.network(url),
+            Text(
+              "$number",
+              style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
           setState(() {
             number = generateRandomNumber(
-                maxNumber: widget.maximumNumber,
-                minNumber: widget.minimumNumber);
+              maxNumber: widget.maximumNumber,
+              minNumber: widget.minimumNumber,
+            );
+
+            service.getRandomPhoto().then((value) {
+              url = value.imageUrl;
+            });
           });
         },
         style: ElevatedButton.styleFrom(minimumSize: const Size(80, 48)),

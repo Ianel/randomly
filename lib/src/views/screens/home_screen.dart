@@ -68,7 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 16),
                     minimumSize: const Size(double.infinity, 64),
-                    backgroundColor: Colors.blue,
                     foregroundColor: Colors.white),
                 onPressed: () {
                   Navigator.of(context).push(
