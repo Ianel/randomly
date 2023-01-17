@@ -29,8 +29,6 @@ class _RandomNumberPageState extends State<RandomNumberPage> {
     service.getRandomPhoto().then((value) {
       url = value.imageUrl;
     });
-
-    print(url);
   }
 
   int generateRandomNumber({required int minNumber, required int maxNumber}) {
@@ -46,8 +44,11 @@ class _RandomNumberPageState extends State<RandomNumberPage> {
       appBar: AppBar(title: const Text("Random Number")),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(url),
+            /*Image(
+              image: NetworkImage(url),
+            ),*/
             Text(
               "$number",
               style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
